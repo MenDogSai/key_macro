@@ -29,26 +29,57 @@ namespace key_macro.FormList
                 switch (raw.Header.type)
                 {
                     case RawInputType.KEYBOARD:
-                        OnKeyboardEvent(raw.Keyboard);
+                        keyboardEvent(raw.Keyboard);
                         break;
 
                     case RawInputType.MOUSE:
-                        OnMouseEvent(raw.Mouse);
+                        mouseEvent(raw.Mouse);
                         break;
                 }
             }
 
             return false;
         }
-        void OnMouseEvent(RawMouse mouse)
+        private void mouseEvent(RawMouse mouse)
         {
             string text = $"{mouse.buttonFlags}, {mouse.rawButtons}, X : {mouse.X}, Y : {mouse.Y}, {mouse.buttonData}";
             mousePositionTextBox.Text = $"{Cursor.Position.X}, {Cursor.Position.Y}";
         }
-        void OnKeyboardEvent(RawKeyboard keyboard)
+        private void keyboardEvent(RawKeyboard keyboard)
         {
             string text = $"VKey : {keyboard.vkey}, Code : {keyboard.makeCode} Msg: {keyboard.message}";
             inputKeyTextBox.Text = text ;
+            ushort key = keyboard.vkey;
+            if (key == Win32.VK_KEY_LALT || key == Win32.VK_KEY_RALT)
+                onALT(keyboard.message);
+            else
+            if (key == Win32.VK_KEY_LCTRL || key == Win32.VK_KEY_RCTRL)
+                onCTRL(keyboard.message);
+            else
+            if (key == Win32.VK_KEY_SHIFT)
+                onShift(keyboard.message);
+        }
+        private void onALT(uint message)
+        {
+            message &= Win32.VK_KEY_UP;
+            if (message == Win32.VK_KEY_DOWN)
+                altLabel.Image = Properties.Resources.lamp_on;
+            else
+                altLabel.Image = Properties.Resources.lamp_off;
+        }
+        private void onCTRL(uint message)
+        {
+            if (message == Win32.VK_KEY_DOWN)
+                ctrlLabel.Image = Properties.Resources.lamp_on;
+            else
+                ctrlLabel.Image = Properties.Resources.lamp_off;
+        }
+        private void onShift(uint message)
+        {
+            if (message == Win32.VK_KEY_DOWN)
+                shiftLabel.Image = Properties.Resources.lamp_on;
+            else
+                shiftLabel.Image = Properties.Resources.lamp_off;
         }
     }
 }

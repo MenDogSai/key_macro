@@ -334,6 +334,17 @@ namespace key_macro
         public const int RIM_INPUT = 0;
         public const int RIM_INPUTSINK = 1;
 
+        public const int VK_KEY_DOWN = 0x00000100;
+        public const int VK_KEY_UP   = 0x00000101;
+
+        public const int VK_KEY_LCTRL = 0x00000011;
+        public const int VK_KEY_RCTRL = 0x00000019;
+
+        public const int VK_KEY_LALT = 0x00000012;
+        public const int VK_KEY_RALT = 0x00000015;
+
+        public const int VK_KEY_SHIFT = 0x00000010;
+
         [DllImport("user32.dll")]
         public static extern bool RegisterRawInputDevices([MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)] RAWINPUTDEVICE[] pRawInputDevices, int uiNumDevices, int cbSize);
 
@@ -370,15 +381,5 @@ namespace key_macro
 
             return rawInput;
         }
-        /*
-        public static Point GetCursorPosition()
-        {
-            POINT lpPoint;
-            GetCursorPos(out lpPoint);
-            // NOTE: If you need error handling
-            // bool success = GetCursorPos(out lpPoint);
-            // if (!success)
-            return lpPoint;
-        }*/
     }
 }
