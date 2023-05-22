@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Key_macro;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -52,8 +53,13 @@ namespace key_macro.FormList
         private void keyboardEvent(RawKeyboard keyboard)
         {
             string text = $"VKey : {keyboard.vkey}, Code : {keyboard.makeCode} Msg: {keyboard.message}";
-            inputKeyTextBox.Text = text ;
+            inputKeyTextBox.Text = text;
+            //string keyStatus = (keyboard.message == Win32.VK_KEY_UP) ? "뗌" : "누름";
             ushort key = keyboard.vkey;
+
+            //inputKeyTextBox.Text = $"{VisualKeys.getKeyDescription(key)} - " + keyStatus;
+            
+
             if (key == Win32.VK_KEY_LALT || key == Win32.VK_KEY_RALT)
                 onALT(keyboard.message);
             else
@@ -101,25 +107,24 @@ namespace key_macro.FormList
         }
         private void onALT(uint message)
         {
-            message &= Win32.VK_KEY_UP;
-            if (message == Win32.VK_KEY_DOWN)
-                altLabel.Image = Properties.Resources.lamp_on;
-            else
+            if (message == Win32.VK_KEY_UP)
                 altLabel.Image = Properties.Resources.lamp_off;
+            else
+                altLabel.Image = Properties.Resources.lamp_on;
         }
         private void onCTRL(uint message)
         {
-            if (message == Win32.VK_KEY_DOWN)
-                ctrlLabel.Image = Properties.Resources.lamp_on;
-            else
+            if (message == Win32.VK_KEY_UP)
                 ctrlLabel.Image = Properties.Resources.lamp_off;
+            else
+                ctrlLabel.Image = Properties.Resources.lamp_on;
         }
         private void onShift(uint message)
         {
-            if (message == Win32.VK_KEY_DOWN)
-                shiftLabel.Image = Properties.Resources.lamp_on;
-            else
+            if (message == Win32.VK_KEY_UP)
                 shiftLabel.Image = Properties.Resources.lamp_off;
+            else
+                shiftLabel.Image = Properties.Resources.lamp_on;
         }
         private void imeCheckTimerTick(object sender, EventArgs e)
         {

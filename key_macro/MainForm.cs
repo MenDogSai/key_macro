@@ -1,4 +1,5 @@
 ﻿using key_macro.FormList;
+using Key_macro;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +20,7 @@ namespace key_macro
         public MainForm()
         {
             InitializeComponent();
+            VisualKeys.initialize();
         }
 
         private void MainFormLoad(object sender, EventArgs e)
