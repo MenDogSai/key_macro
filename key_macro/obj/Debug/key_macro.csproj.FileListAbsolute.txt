@@ -10,3 +10,15 @@ C:\Users\YJ\Desktop\project\key_macro\key_macro\obj\Debug\key_macro.csproj.Gener
 C:\Users\YJ\Desktop\project\key_macro\key_macro\obj\Debug\key_macro.csproj.CoreCompileInputs.cache
 C:\Users\YJ\Desktop\project\key_macro\key_macro\obj\Debug\key_macro.exe
 C:\Users\YJ\Desktop\project\key_macro\key_macro\obj\Debug\key_macro.pdb
+C:\Users\YJ\Desktop\key_macro\key_macro\bin\Debug\key_macro.exe.config
+C:\Users\YJ\Desktop\key_macro\key_macro\bin\Debug\key_macro.exe
+C:\Users\YJ\Desktop\key_macro\key_macro\bin\Debug\key_macro.pdb
+C:\Users\YJ\Desktop\key_macro\key_macro\obj\Debug\key_macro.csproj.AssemblyReference.cache
+C:\Users\YJ\Desktop\key_macro\key_macro\obj\Debug\key_macro.csproj.SuggestedBindingRedirects.cache
+C:\Users\YJ\Desktop\key_macro\key_macro\obj\Debug\key_macro.FormList.StatusForm.resources
+C:\Users\YJ\Desktop\key_macro\key_macro\obj\Debug\key_macro.MainForm.resources
+C:\Users\YJ\Desktop\key_macro\key_macro\obj\Debug\key_macro.Properties.Resources.resources
+C:\Users\YJ\Desktop\key_macro\key_macro\obj\Debug\key_macro.csproj.GenerateResource.cache
+C:\Users\YJ\Desktop\key_macro\key_macro\obj\Debug\key_macro.csproj.CoreCompileInputs.cache
+C:\Users\YJ\Desktop\key_macro\key_macro\obj\Debug\key_macro.exe
+C:\Users\YJ\Desktop\key_macro\key_macro\obj\Debug\key_macro.pdb

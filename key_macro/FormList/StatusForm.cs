@@ -21,7 +21,6 @@ namespace key_macro.FormList
         }
         public bool PreFilterMessage(ref Message m)
         {
-
             if (m.Msg == Win32.WM_INPUT)
             {
                 RawInput raw = inputDevice.GetDeviceID(m);
@@ -40,10 +39,15 @@ namespace key_macro.FormList
 
             return false;
         }
+        private void StatusFormLoad(object sender, EventArgs e)
+        {
+            imeCheckTimer.Enabled = true;
+        }
         private void mouseEvent(RawMouse mouse)
         {
-            string text = $"{mouse.buttonFlags}, {mouse.rawButtons}, X : {mouse.X}, Y : {mouse.Y}, {mouse.buttonData}";
+            //string text = $"{mouse.buttonFlags}, {mouse.rawButtons}, X : {mouse.X}, Y : {mouse.Y}, {mouse.buttonData}";
             mousePositionTextBox.Text = $"{Cursor.Position.X}, {Cursor.Position.Y}";
+            onMouseButtons(mouse.buttonFlags);
         }
         private void keyboardEvent(RawKeyboard keyboard)
         {
@@ -58,6 +62,42 @@ namespace key_macro.FormList
             else
             if (key == Win32.VK_KEY_SHIFT)
                 onShift(keyboard.message);
+        }
+        private void onMouseButtons(RawMouseButtons buttons)
+        {
+            switch (buttons)
+            {
+                case RawMouseButtons.LEFT_UP:
+                    leftLabel.Image = Properties.Resources.lamp_off;
+                    break; 
+                case RawMouseButtons.LEFT_DOWN:
+                    leftLabel.Image = Properties.Resources.lamp_on;
+                    break;
+                case RawMouseButtons.RIGHT_UP:
+                    rightLabel.Image = Properties.Resources.lamp_off;
+                    break;
+                case RawMouseButtons.RIGHT_DOWN:
+                    rightLabel.Image = Properties.Resources.lamp_on;
+                    break;
+                case RawMouseButtons.MIDDLE_UP:
+                    middleLabel.Image = Properties.Resources.lamp_off;
+                    break;
+                case RawMouseButtons.MIDDLE_DOWN:
+                    middleLabel.Image= Properties.Resources.lamp_on;
+                    break;
+                case RawMouseButtons.BUTTON4_UP:
+                    x1Label.Image = Properties.Resources.lamp_off;
+                    break;
+                case RawMouseButtons.BUTTON4_DOWN:
+                    x1Label.Image= Properties.Resources.lamp_on;
+                    break;
+                case RawMouseButtons.BUTTON5_UP:
+                    x2Label.Image = Properties.Resources.lamp_off;
+                    break;
+                case RawMouseButtons.BUTTON5_DOWN:
+                    x2Label.Image= Properties.Resources.lamp_on;
+                    break;
+            }
         }
         private void onALT(uint message)
         {
@@ -80,6 +120,16 @@ namespace key_macro.FormList
                 shiftLabel.Image = Properties.Resources.lamp_on;
             else
                 shiftLabel.Image = Properties.Resources.lamp_off;
+        }
+        private void imeCheckTimerTick(object sender, EventArgs e)
+        {
+            imeCheckTimer.Enabled = false;
+            bool checkHangul = inputDevice.isIMEStatus();
+            if (checkHangul)
+                languageTextBox.Text = "한글";
+            else
+                languageTextBox.Text = "영어";
+            imeCheckTimer.Enabled  = true;
         }
     }
 }

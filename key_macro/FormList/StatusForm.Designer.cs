@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StatusForm));
             this.inputKeyLabel = new System.Windows.Forms.Label();
             this.controlsLabel = new System.Windows.Forms.Label();
@@ -40,11 +41,12 @@
             this.ctrlLabel = new System.Windows.Forms.Label();
             this.altLabel = new System.Windows.Forms.Label();
             this.shiftLabel = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.rightLabel = new System.Windows.Forms.Label();
+            this.middleLabel = new System.Windows.Forms.Label();
+            this.leftLabel = new System.Windows.Forms.Label();
+            this.x2Label = new System.Windows.Forms.Label();
+            this.x1Label = new System.Windows.Forms.Label();
+            this.imeCheckTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // inputKeyLabel
@@ -152,76 +154,81 @@
             this.shiftLabel.Text = " Shift";
             this.shiftLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label1
+            // rightLabel
             // 
-            this.label1.Font = new System.Drawing.Font("Gulim", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label1.Image = global::key_macro.Properties.Resources.lamp_off;
-            this.label1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label1.Location = new System.Drawing.Point(191, 117);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(61, 17);
-            this.label1.TabIndex = 13;
-            this.label1.Text = " Right";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.rightLabel.Font = new System.Drawing.Font("Gulim", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.rightLabel.Image = global::key_macro.Properties.Resources.lamp_off;
+            this.rightLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.rightLabel.Location = new System.Drawing.Point(191, 117);
+            this.rightLabel.Name = "rightLabel";
+            this.rightLabel.Size = new System.Drawing.Size(61, 17);
+            this.rightLabel.TabIndex = 13;
+            this.rightLabel.Text = " Right";
+            this.rightLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label2
+            // middleLabel
             // 
-            this.label2.Font = new System.Drawing.Font("Gulim", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label2.Image = global::key_macro.Properties.Resources.lamp_off;
-            this.label2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label2.Location = new System.Drawing.Point(134, 117);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 17);
-            this.label2.TabIndex = 12;
-            this.label2.Text = "  Middle";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.middleLabel.Font = new System.Drawing.Font("Gulim", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.middleLabel.Image = global::key_macro.Properties.Resources.lamp_off;
+            this.middleLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.middleLabel.Location = new System.Drawing.Point(134, 117);
+            this.middleLabel.Name = "middleLabel";
+            this.middleLabel.Size = new System.Drawing.Size(64, 17);
+            this.middleLabel.TabIndex = 12;
+            this.middleLabel.Text = "  Middle";
+            this.middleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label3
+            // leftLabel
             // 
-            this.label3.Font = new System.Drawing.Font("Gulim", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label3.Image = global::key_macro.Properties.Resources.lamp_off;
-            this.label3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label3.Location = new System.Drawing.Point(94, 117);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 17);
-            this.label3.TabIndex = 11;
-            this.label3.Text = " Left";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.leftLabel.Font = new System.Drawing.Font("Gulim", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.leftLabel.Image = global::key_macro.Properties.Resources.lamp_off;
+            this.leftLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.leftLabel.Location = new System.Drawing.Point(94, 117);
+            this.leftLabel.Name = "leftLabel";
+            this.leftLabel.Size = new System.Drawing.Size(53, 17);
+            this.leftLabel.TabIndex = 11;
+            this.leftLabel.Text = " Left";
+            this.leftLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label4
+            // x2Label
             // 
-            this.label4.Font = new System.Drawing.Font("Gulim", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label4.Image = global::key_macro.Properties.Resources.lamp_off;
-            this.label4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label4.Location = new System.Drawing.Point(284, 117);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(51, 17);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "X2";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.x2Label.Font = new System.Drawing.Font("Gulim", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.x2Label.Image = global::key_macro.Properties.Resources.lamp_off;
+            this.x2Label.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.x2Label.Location = new System.Drawing.Point(284, 117);
+            this.x2Label.Name = "x2Label";
+            this.x2Label.Size = new System.Drawing.Size(51, 17);
+            this.x2Label.TabIndex = 15;
+            this.x2Label.Text = "X2";
+            this.x2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label5
+            // x1Label
             // 
-            this.label5.Font = new System.Drawing.Font("Gulim", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label5.Image = global::key_macro.Properties.Resources.lamp_off;
-            this.label5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label5.Location = new System.Drawing.Point(240, 117);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(52, 17);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "X1";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.x1Label.Font = new System.Drawing.Font("Gulim", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.x1Label.Image = global::key_macro.Properties.Resources.lamp_off;
+            this.x1Label.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.x1Label.Location = new System.Drawing.Point(240, 117);
+            this.x1Label.Name = "x1Label";
+            this.x1Label.Size = new System.Drawing.Size(52, 17);
+            this.x1Label.TabIndex = 14;
+            this.x1Label.Text = "X1";
+            this.x1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // imeCheckTimer
+            // 
+            this.imeCheckTimer.Interval = 1;
+            this.imeCheckTimer.Tick += new System.EventHandler(this.imeCheckTimerTick);
             // 
             // StatusForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(328, 139);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.x2Label);
+            this.Controls.Add(this.x1Label);
+            this.Controls.Add(this.rightLabel);
+            this.Controls.Add(this.middleLabel);
+            this.Controls.Add(this.leftLabel);
             this.Controls.Add(this.shiftLabel);
             this.Controls.Add(this.altLabel);
             this.Controls.Add(this.ctrlLabel);
@@ -238,6 +245,7 @@
             this.MinimizeBox = false;
             this.Name = "StatusForm";
             this.Text = "[키보드 / 마우스] 상태표시";
+            this.Load += new System.EventHandler(this.StatusFormLoad);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -256,10 +264,11 @@
         private System.Windows.Forms.Label ctrlLabel;
         private System.Windows.Forms.Label altLabel;
         private System.Windows.Forms.Label shiftLabel;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label rightLabel;
+        private System.Windows.Forms.Label middleLabel;
+        private System.Windows.Forms.Label leftLabel;
+        private System.Windows.Forms.Label x2Label;
+        private System.Windows.Forms.Label x1Label;
+        private System.Windows.Forms.Timer imeCheckTimer;
     }
 }

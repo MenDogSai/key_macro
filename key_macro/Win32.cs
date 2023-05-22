@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace key_macro
 {
@@ -331,6 +332,8 @@ namespace key_macro
         public const int WM_RBUTTONDOWN = 0x0204;
         public const int WM_PARENTNOTIFY = 0x210;
 
+        public const int WM_IME_CONTROL = 0x283;
+
         public const int RIM_INPUT = 0;
         public const int RIM_INPUTSINK = 1;
 
@@ -350,10 +353,15 @@ namespace key_macro
 
         [DllImport("User32.dll")]
         public static extern uint GetRawInputData(IntPtr hRawInput, uint uiCommand, IntPtr pData, ref uint pcbSize, uint cbSizeHeader);
-        /// Retrieves the cursor's position, in screen coordinates.
-        /// <see>See MSDN documentation for further information.</see>
-        ///[DllImport("user32.dll")]
-        ///public static extern bool GetCursorPos(out POINT lpPoint);
+        
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr IParam);
+
+        [DllImport("imm32.dll")]
+        public static extern IntPtr ImmGetDefaultIMEWnd(IntPtr hWnd);
 
         public RawInput GetDeviceID(Message message)
         {
@@ -380,6 +388,20 @@ namespace key_macro
             Marshal.FreeHGlobal(buffer);
 
             return rawInput;
+        }
+        public bool isIMEStatus()
+        {
+            IntPtr topWindow = Win32.GetForegroundWindow();
+            if (topWindow != IntPtr.Zero)
+            {
+                IntPtr ime = Win32.ImmGetDefaultIMEWnd(topWindow);
+                if (ime != IntPtr.Zero)
+                {
+                    IntPtr status = SendMessage(ime, WM_IME_CONTROL, new IntPtr(0x5), new IntPtr(0));
+                    return (status.ToInt32() != 0)? true : false;
+                }
+            }
+            return false;
         }
     }
 }
