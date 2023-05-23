@@ -240,6 +240,7 @@
             this.Controls.Add(this.languageLabel);
             this.Controls.Add(this.controlsLabel);
             this.Controls.Add(this.inputKeyLabel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;

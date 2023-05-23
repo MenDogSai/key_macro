@@ -52,22 +52,28 @@ namespace key_macro.FormList
         }
         private void keyboardEvent(RawKeyboard keyboard)
         {
-            string text = $"VKey : {keyboard.vkey}, Code : {keyboard.makeCode} Msg: {keyboard.message}";
-            inputKeyTextBox.Text = text;
-            //string keyStatus = (keyboard.message == Win32.VK_KEY_UP) ? "뗌" : "누름";
-            ushort key = keyboard.vkey;
-
-            //inputKeyTextBox.Text = $"{VisualKeys.getKeyDescription(key)} - " + keyStatus;
+            //string text = $"VKey : {keyboard.vkey}, Code : {keyboard.makeCode} Msg: {keyboard.message}";
+            //inputKeyTextBox.Text = text;
+            ushort key  = keyboard.vkey;
+            string keyStatus = (keyboard.message == Win32.VK_KEY_UP) ? "뗌" : "누름";
+            string description = VisualKey.getKeyDescription(key);
             
+            if (keyboard.makeCode == 56) { 
+                key = Win32.VK_KEY_LALT;
+                description = VisualKey.getKeyDescription(VisualKey.getKeyIndex("ALT"));
+            }
 
-            if (key == Win32.VK_KEY_LALT || key == Win32.VK_KEY_RALT)
+            if (key == Win32.VK_KEY_LALT)
                 onALT(keyboard.message);
             else
-            if (key == Win32.VK_KEY_LCTRL || key == Win32.VK_KEY_RCTRL)
+            if (key == Win32.VK_KEY_LCTRL || key == Win32.VK_KEY_RCTRL) { 
                 onCTRL(keyboard.message);
+                description = VisualKey.getKeyDescription(VisualKey.getKeyIndex("CTL"));
+            }
             else
             if (key == Win32.VK_KEY_SHIFT)
                 onShift(keyboard.message);
+            inputKeyTextBox.Text = description + " - " + keyStatus;
         }
         private void onMouseButtons(RawMouseButtons buttons)
         {

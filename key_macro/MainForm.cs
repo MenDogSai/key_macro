@@ -17,10 +17,11 @@ namespace key_macro
     {
         private StatusForm statusForm = null;
         private const int CP_NOCLOSE_BUTTON = 0x200;
+        private bool iconCheck = false;
         public MainForm()
         {
             InitializeComponent();
-            VisualKeys.initialize();
+            VisualKey.initialize();
         }
 
         private void MainFormLoad(object sender, EventArgs e)
@@ -57,7 +58,6 @@ namespace key_macro
         {
            this.Dispose();
         }
-
         private void statusButtonClick(object sender, EventArgs e)
         {
             //상태 창 중복 show 방지
@@ -71,6 +71,53 @@ namespace key_macro
         private void statusFormClosed(object sender, FormClosedEventArgs e)
         {
             statusForm = null;
+        }
+        private void runRadioButtonCheckedChanged(object sender, EventArgs e)
+        {
+            if (runRadioButton.Checked == false) return;
+
+            pathButton.Enabled = false;
+            recordButton.Enabled = false;
+            configButton.Enabled = false;
+            addButton.Enabled = false;
+            editButton.Enabled = false;
+            copyButton.Enabled = false;
+            deleteButton.Enabled = false;
+            upButton.Enabled = false;
+            downButton.Enabled = false;
+            debugButton.Enabled = true;
+            iconTimer.Enabled = true;
+        }
+        private void stopRadioButtonCheckedChanged(object sender, EventArgs e)
+        {
+            if (stopRadioButton.Checked == false) return;
+
+            pathButton.Enabled = true;
+            recordButton.Enabled = true;
+            configButton.Enabled = true;
+            addButton.Enabled = true;
+            editButton.Enabled = true;
+            copyButton.Enabled = true;
+            deleteButton.Enabled = true;
+            upButton.Enabled = true;
+            downButton.Enabled = true;
+            debugButton.Enabled = false;
+            iconTimer.Enabled = false;
+            this.Icon = global::key_macro.Properties.Resources.key_macro_ico;
+        }
+
+        private void iconTimerTick(object sender, EventArgs e)
+        {
+            iconTimer.Enabled = false;
+            if (iconCheck) { 
+                this.Icon = global::key_macro.Properties.Resources.idr_main_ico;
+                iconCheck = false;
+            }
+            else { 
+                this.Icon = global::key_macro.Properties.Resources.key_macro_ico;
+                iconCheck = true;
+            }
+            iconTimer.Enabled = true;
         }
     }
 }

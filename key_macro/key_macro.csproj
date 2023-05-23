@@ -64,6 +64,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormList\RecordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormList\RecordForm.Designer.cs">
+      <DependentUpon>RecordForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="VisualKey.cs" />
     <Compile Include="FormList\StatusForm.cs">
       <SubType>Form</SubType>
