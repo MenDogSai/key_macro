@@ -3,7 +3,7 @@
 
 ## 제작환경
 * Windows 10 64bit
-* Microsoft Visual Studio Community 2022 (64-bit) - Version 17.5.4
+* Microsoft Visual Studio Community 2022 (64-bit) - Version 17.6.1
 * .NET Framework 4.8
 
 ## 참조

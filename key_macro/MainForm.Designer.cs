@@ -137,6 +137,7 @@
             this.recordButton.TabIndex = 10;
             this.recordButton.Text = "기록";
             this.recordButton.UseVisualStyleBackColor = true;
+            this.recordButton.Click += new System.EventHandler(this.recordButtonClick);
             // 
             // addButton
             // 

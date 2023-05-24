@@ -119,5 +119,15 @@ namespace key_macro
             }
             iconTimer.Enabled = true;
         }
+
+        private void recordButtonClick(object sender, EventArgs e)
+        {
+            RecordForm recordForm = new RecordForm();
+            recordForm.ShowDialog();
+            if(recordForm.ShowDialog() == DialogResult.OK)
+            {
+
+            }
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace Key_macro
 {
     static public class VisualKey
     {
-        const int KEY_MAX = 255;
+        const int KEY_MAX = 256;
         static private string[] name = new string[KEY_MAX];
         static private string[] description = new string[KEY_MAX];
         static public void initialize() 

@@ -22,3 +22,4 @@ C:\Users\YJ\Desktop\key_macro\key_macro\bin\Debug\key_macro.exe
 C:\Users\YJ\Desktop\key_macro\key_macro\bin\Debug\key_macro.pdb
 C:\Users\YJ\Desktop\key_macro\key_macro\obj\Debug\key_macro.exe
 C:\Users\YJ\Desktop\key_macro\key_macro\obj\Debug\key_macro.pdb
+C:\Users\YJ\Desktop\key_macro\key_macro\obj\Debug\key_macro.FormList.RecordForm.resources
