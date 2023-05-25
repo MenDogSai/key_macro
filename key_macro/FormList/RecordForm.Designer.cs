@@ -28,12 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RecordForm));
             this.recordListBox = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.recordButton = new System.Windows.Forms.Button();
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.recordTimer = new System.Windows.Forms.Timer(this.components);
+            this.testLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // recordListBox
@@ -62,6 +65,7 @@
             this.recordButton.TabIndex = 2;
             this.recordButton.Text = "기록 대기 중";
             this.recordButton.UseVisualStyleBackColor = true;
+            this.recordButton.Click += new System.EventHandler(this.recordButtonClick);
             // 
             // okButton
             // 
@@ -71,6 +75,7 @@
             this.okButton.TabIndex = 3;
             this.okButton.Text = "OK";
             this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.okButtonClick);
             // 
             // cancelButton
             // 
@@ -80,12 +85,28 @@
             this.cancelButton.TabIndex = 4;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButtonClick);
+            // 
+            // recordTimer
+            // 
+            this.recordTimer.Interval = 1;
+            this.recordTimer.Tick += new System.EventHandler(this.recordTimerTick);
+            // 
+            // testLabel
+            // 
+            this.testLabel.AutoSize = true;
+            this.testLabel.Location = new System.Drawing.Point(15, 286);
+            this.testLabel.Name = "testLabel";
+            this.testLabel.Size = new System.Drawing.Size(38, 12);
+            this.testLabel.TabIndex = 5;
+            this.testLabel.Text = "label2";
             // 
             // RecordForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(443, 443);
+            this.Controls.Add(this.testLabel);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.recordButton);
@@ -109,5 +130,7 @@
         private System.Windows.Forms.Button recordButton;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.Timer recordTimer;
+        private System.Windows.Forms.Label testLabel;
     }
 }

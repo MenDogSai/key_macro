@@ -72,6 +72,7 @@
             // 
             // debugButton
             // 
+            this.debugButton.Enabled = false;
             this.debugButton.Font = new System.Drawing.Font("Gulim", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.debugButton.Location = new System.Drawing.Point(165, 353);
             this.debugButton.Name = "debugButton";
@@ -202,6 +203,7 @@
             // stopRadioButton
             // 
             this.stopRadioButton.AutoSize = true;
+            this.stopRadioButton.Checked = true;
             this.stopRadioButton.Location = new System.Drawing.Point(191, 41);
             this.stopRadioButton.Name = "stopRadioButton";
             this.stopRadioButton.Size = new System.Drawing.Size(115, 16);
@@ -218,7 +220,6 @@
             this.runRadioButton.Name = "runRadioButton";
             this.runRadioButton.Size = new System.Drawing.Size(115, 16);
             this.runRadioButton.TabIndex = 17;
-            this.runRadioButton.TabStop = true;
             this.runRadioButton.Text = "매크로 실행 가능";
             this.runRadioButton.UseVisualStyleBackColor = true;
             this.runRadioButton.CheckedChanged += new System.EventHandler(this.runRadioButtonCheckedChanged);

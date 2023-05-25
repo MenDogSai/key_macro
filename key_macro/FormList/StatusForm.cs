@@ -13,18 +13,16 @@ namespace key_macro.FormList
 {
     public partial class StatusForm : Form, IMessageFilter
     {
-        Win32 inputDevice = null;
         public StatusForm()
         {
             InitializeComponent();
             Application.AddMessageFilter(this);
-            inputDevice = new Win32();
         }
         public bool PreFilterMessage(ref Message m)
         {
             if (m.Msg == Win32.WM_INPUT)
             {
-                RawInput raw = inputDevice.GetDeviceID(m);
+                RawInput raw = Win32.GetDeviceID(m);
 
                 switch (raw.Header.type)
                 {
@@ -46,14 +44,15 @@ namespace key_macro.FormList
         }
         private void mouseEvent(RawMouse mouse)
         {
-            //string text = $"{mouse.buttonFlags}, {mouse.rawButtons}, X : {mouse.X}, Y : {mouse.Y}, {mouse.buttonData}";
+            string text = $"{mouse.buttonFlags}, {mouse.rawButtons}, X : {mouse.X}, Y : {mouse.Y}, {mouse.buttonData}";
+            inputKeyTextBox.Text = text;
             mousePositionTextBox.Text = $"{Cursor.Position.X}, {Cursor.Position.Y}";
             onMouseButtons(mouse.buttonFlags);
         }
         private void keyboardEvent(RawKeyboard keyboard)
         {
-            //string text = $"VKey : {keyboard.vkey}, Code : {keyboard.makeCode} Msg: {keyboard.message}";
-            //inputKeyTextBox.Text = text;
+            string text = $"VKey : {keyboard.vkey}, Code : {keyboard.makeCode} Msg: {keyboard.message}";
+            inputKeyTextBox.Text = text;
             ushort key  = keyboard.vkey;
             string keyStatus = (keyboard.message == Win32.VK_KEY_UP) ? "뗌" : "누름";
             string description = VisualKey.getKeyDescription(key);
@@ -73,7 +72,7 @@ namespace key_macro.FormList
             else
             if (key == Win32.VK_KEY_SHIFT)
                 onShift(keyboard.message);
-            inputKeyTextBox.Text = description + " - " + keyStatus;
+            //inputKeyTextBox.Text = description + " - " + keyStatus;
         }
         private void onMouseButtons(RawMouseButtons buttons)
         {
@@ -135,7 +134,7 @@ namespace key_macro.FormList
         private void imeCheckTimerTick(object sender, EventArgs e)
         {
             imeCheckTimer.Enabled = false;
-            bool checkHangul = inputDevice.isIMEStatus();
+            bool checkHangul = Win32.isIMEStatus();
             if (checkHangul)
                 languageTextBox.Text = "한글";
             else

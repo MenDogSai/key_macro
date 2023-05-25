@@ -42,16 +42,16 @@ namespace key_macro
             int structSize = sizeof(HIDUsagePage) + sizeof(HIDUsage) + sizeof(RawInputDeviceFlags) + IntPtr.Size;
 
             if (Win32.RegisterRawInputDevices(rid, RID_SIZE, structSize) == false)
-                MessageBox.Show("RegisterRawInputDevices no work");
+                MessageBox.Show("RegisterRawInputDevices가 동작하지 않습니다");
 
         }
         protected override CreateParams CreateParams
         {
             get
             {
-                CreateParams myCp = base.CreateParams;
-                myCp.ClassStyle = myCp.ClassStyle | CP_NOCLOSE_BUTTON;
-                return myCp;
+                CreateParams createParams = base.CreateParams;
+                createParams.ClassStyle = createParams.ClassStyle | CP_NOCLOSE_BUTTON;
+                return createParams;
             }
         }
         private void exitButtonClick(object sender, EventArgs e)
@@ -124,9 +124,9 @@ namespace key_macro
         {
             RecordForm recordForm = new RecordForm();
             recordForm.ShowDialog();
-            if(recordForm.ShowDialog() == DialogResult.OK)
+            if(recordForm.DialogResult == DialogResult.OK)
             {
-
+                recordForm.Close();
             }
         }
     }
