@@ -58,12 +58,19 @@ namespace key_macro.FormList
             testLabel.Text = text;
             if (!recordEnable) return;
             recordTimer.Enabled = false;
+            MouseBlock mouseBlock = null;
 
             WaitBlock waitBlock = new WaitBlock(recordTime, 0);
             record.add(waitBlock);
-            MouseBlock mouseBlock = new MouseBlock(mouse, Cursor.Position);
+            if (mouse.buttonFlags == 0)
+                mouseBlock = new MouseBlock(Cursor.Position);
+            else
+                mouseBlock = new MouseBlock(mouse, Cursor.Position);
+
             record.add(mouseBlock);
 
+            recordListBox.Items.Add(waitBlock.description);
+            recordListBox.Items.Add(mouseBlock.description);
             recordTime = 0;
             recordTimer.Enabled = true;
         }
@@ -78,6 +85,8 @@ namespace key_macro.FormList
             KeyBoardBlock keyBoardBlock = new KeyBoardBlock(keyboard);
             record.add(keyBoardBlock);
 
+            recordListBox.Items.Add(waitBlock.description);
+            recordListBox.Items.Add(keyBoardBlock.description);
             recordTime = 0;
             recordTimer.Enabled = true;
         }

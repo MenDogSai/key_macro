@@ -37,6 +37,15 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.recordTimer = new System.Windows.Forms.Timer(this.components);
             this.testLabel = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.mouseMoveUpDown = new System.Windows.Forms.NumericUpDown();
+            this.mouseMoveCheckBox = new System.Windows.Forms.CheckBox();
+            this.delayCheckBox = new System.Windows.Forms.CheckBox();
+            this.delayUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.mouseMoveUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.delayUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // recordListBox
@@ -101,11 +110,94 @@
             this.testLabel.TabIndex = 5;
             this.testLabel.Text = "label2";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(305, 191);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(57, 12);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "이상일 때";
+            // 
+            // mouseMoveUpDown
+            // 
+            this.mouseMoveUpDown.Location = new System.Drawing.Point(245, 187);
+            this.mouseMoveUpDown.Name = "mouseMoveUpDown";
+            this.mouseMoveUpDown.Size = new System.Drawing.Size(54, 21);
+            this.mouseMoveUpDown.TabIndex = 7;
+            this.mouseMoveUpDown.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // mouseMoveCheckBox
+            // 
+            this.mouseMoveCheckBox.AutoSize = true;
+            this.mouseMoveCheckBox.Location = new System.Drawing.Point(245, 165);
+            this.mouseMoveCheckBox.Name = "mouseMoveCheckBox";
+            this.mouseMoveCheckBox.Size = new System.Drawing.Size(92, 16);
+            this.mouseMoveCheckBox.TabIndex = 8;
+            this.mouseMoveCheckBox.Text = "마우스 이동:";
+            this.mouseMoveCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // delayCheckBox
+            // 
+            this.delayCheckBox.AutoSize = true;
+            this.delayCheckBox.Location = new System.Drawing.Point(245, 224);
+            this.delayCheckBox.Name = "delayCheckBox";
+            this.delayCheckBox.Size = new System.Drawing.Size(80, 16);
+            this.delayCheckBox.TabIndex = 9;
+            this.delayCheckBox.Text = "시간 지연:";
+            this.delayCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // delayUpDown
+            // 
+            this.delayUpDown.Location = new System.Drawing.Point(245, 246);
+            this.delayUpDown.Maximum = new decimal(new int[] {
+            9000,
+            0,
+            0,
+            0});
+            this.delayUpDown.Name = "delayUpDown";
+            this.delayUpDown.Size = new System.Drawing.Size(54, 21);
+            this.delayUpDown.TabIndex = 11;
+            this.delayUpDown.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(305, 250);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(85, 12);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "m/s 이상일 때";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(247, 131);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(61, 12);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "기록 옵션:";
+            // 
             // RecordForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(443, 443);
+            this.ClientSize = new System.Drawing.Size(397, 443);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.delayUpDown);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.delayCheckBox);
+            this.Controls.Add(this.mouseMoveCheckBox);
+            this.Controls.Add(this.mouseMoveUpDown);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.testLabel);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
@@ -117,7 +209,9 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "RecordForm";
-            this.Text = "RecordForm";
+            this.Text = "매크로 기록";
+            ((System.ComponentModel.ISupportInitialize)(this.mouseMoveUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.delayUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -132,5 +226,12 @@
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Timer recordTimer;
         private System.Windows.Forms.Label testLabel;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown mouseMoveUpDown;
+        private System.Windows.Forms.CheckBox mouseMoveCheckBox;
+        private System.Windows.Forms.CheckBox delayCheckBox;
+        private System.Windows.Forms.NumericUpDown delayUpDown;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
     }
 }

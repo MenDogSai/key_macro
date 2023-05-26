@@ -44,15 +44,11 @@ namespace key_macro.FormList
         }
         private void mouseEvent(RawMouse mouse)
         {
-            string text = $"{mouse.buttonFlags}, {mouse.rawButtons}, X : {mouse.X}, Y : {mouse.Y}, {mouse.buttonData}";
-            inputKeyTextBox.Text = text;
             mousePositionTextBox.Text = $"{Cursor.Position.X}, {Cursor.Position.Y}";
             onMouseButtons(mouse.buttonFlags);
         }
         private void keyboardEvent(RawKeyboard keyboard)
         {
-            string text = $"VKey : {keyboard.vkey}, Code : {keyboard.makeCode} Msg: {keyboard.message}";
-            inputKeyTextBox.Text = text;
             ushort key  = keyboard.vkey;
             string keyStatus = (keyboard.message == Win32.VK_KEY_UP) ? "뗌" : "누름";
             string description = VisualKey.getKeyDescription(key);
@@ -72,7 +68,7 @@ namespace key_macro.FormList
             else
             if (key == Win32.VK_KEY_SHIFT)
                 onShift(keyboard.message);
-            //inputKeyTextBox.Text = description + " - " + keyStatus;
+            inputKeyTextBox.Text = $"{description} → {keyStatus}";
         }
         private void onMouseButtons(RawMouseButtons buttons)
         {
