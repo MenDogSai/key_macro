@@ -117,14 +117,14 @@ namespace key_macro
             return 0;
         }
     }
-    public class KeyBoardBlock
+    public class KeyboardBlock
     {
 
         public int index;
         public string description;
         private INPUT input;
 
-        public KeyBoardBlock(RawKeyboard keyboard)
+        public KeyboardBlock(RawKeyboard keyboard)
         {
             const uint PRESSED = 1;
             input.ki.wVk = keyboard.vkey;
@@ -144,15 +144,15 @@ namespace key_macro
     {
         public int index;
         public string description;
-        uint time;
+        long time;
         uint flag;
-        public WaitBlock(uint time, uint flag)
+        public WaitBlock(long time, uint flag)
         {
             this.time = time;
             this.flag = flag;
             description = $"시간지연 {time/1000}.{time%1000} 초";
         }
-        void act(ref uint time)
+        void act(ref long time)
         {
             this.time = time;
         }
@@ -179,13 +179,13 @@ namespace key_macro
     public class MacroBlock
     {
         public MouseBlock mouse = null;
-        public KeyBoardBlock keyBoard = null;
+        public KeyboardBlock keyboard = null;
         public WaitBlock wait = null;
         public LoopBlock loop = null;
         public MacroBlock(MacroBlock macroBlock)
         {
             this.mouse = macroBlock.mouse;
-            this.keyBoard = macroBlock.keyBoard;
+            this.keyboard = macroBlock.keyboard;
             this.wait = macroBlock.wait;
             this.loop = macroBlock.loop;
         }
@@ -193,9 +193,9 @@ namespace key_macro
         {
             this.mouse = mouse;
         }
-        public MacroBlock (KeyBoardBlock keyBoard) 
+        public MacroBlock (KeyboardBlock keyboard) 
         {
-            this.keyBoard = keyBoard;
+            this.keyboard = keyboard;
         }
         public MacroBlock(WaitBlock wait) 
         {
@@ -218,7 +218,7 @@ namespace key_macro
         {
             blocks.Add(new MacroBlock(mouse));
         }
-        public void add(KeyBoardBlock keyboard)
+        public void add(KeyboardBlock keyboard)
         {
             blocks.Add(new MacroBlock(keyboard));
         }
@@ -238,7 +238,7 @@ namespace key_macro
         {
             blocks.Insert(index, new MacroBlock(mouse));
         }
-        public void insert(int index, KeyBoardBlock keyboard)
+        public void insert(int index, KeyboardBlock keyboard)
         {
             blocks.Insert(index, new MacroBlock(keyboard));
         }

@@ -28,14 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RecordForm));
             this.recordListBox = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.recordButton = new System.Windows.Forms.Button();
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
-            this.recordTimer = new System.Windows.Forms.Timer(this.components);
             this.testLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.mouseMoveUpDown = new System.Windows.Forms.NumericUpDown();
@@ -44,6 +41,12 @@
             this.delayUpDown = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.startCheckBox = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.mouseWheelcheckBox = new System.Windows.Forms.CheckBox();
+            this.mouseButtonCheckBox = new System.Windows.Forms.CheckBox();
+            this.includePosCheckBox = new System.Windows.Forms.CheckBox();
+            this.keyboardCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.mouseMoveUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.delayUpDown)).BeginInit();
             this.SuspendLayout();
@@ -52,29 +55,19 @@
             // 
             this.recordListBox.FormattingEnabled = true;
             this.recordListBox.ItemHeight = 12;
-            this.recordListBox.Location = new System.Drawing.Point(12, 131);
+            this.recordListBox.Location = new System.Drawing.Point(12, 83);
             this.recordListBox.Name = "recordListBox";
-            this.recordListBox.Size = new System.Drawing.Size(227, 148);
+            this.recordListBox.Size = new System.Drawing.Size(227, 196);
             this.recordListBox.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 99);
+            this.label1.Location = new System.Drawing.Point(13, 59);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(61, 12);
             this.label1.TabIndex = 1;
             this.label1.Text = "기록 상태:";
-            // 
-            // recordButton
-            // 
-            this.recordButton.Location = new System.Drawing.Point(80, 93);
-            this.recordButton.Name = "recordButton";
-            this.recordButton.Size = new System.Drawing.Size(159, 23);
-            this.recordButton.TabIndex = 2;
-            this.recordButton.Text = "기록 대기 중";
-            this.recordButton.UseVisualStyleBackColor = true;
-            this.recordButton.Click += new System.EventHandler(this.recordButtonClick);
             // 
             // okButton
             // 
@@ -96,15 +89,10 @@
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButtonClick);
             // 
-            // recordTimer
-            // 
-            this.recordTimer.Interval = 1;
-            this.recordTimer.Tick += new System.EventHandler(this.recordTimerTick);
-            // 
             // testLabel
             // 
             this.testLabel.AutoSize = true;
-            this.testLabel.Location = new System.Drawing.Point(15, 286);
+            this.testLabel.Location = new System.Drawing.Point(13, 339);
             this.testLabel.Name = "testLabel";
             this.testLabel.Size = new System.Drawing.Size(38, 12);
             this.testLabel.TabIndex = 5;
@@ -113,7 +101,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(305, 191);
+            this.label2.Location = new System.Drawing.Point(316, 210);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(57, 12);
             this.label2.TabIndex = 6;
@@ -121,7 +109,7 @@
             // 
             // mouseMoveUpDown
             // 
-            this.mouseMoveUpDown.Location = new System.Drawing.Point(245, 187);
+            this.mouseMoveUpDown.Location = new System.Drawing.Point(256, 206);
             this.mouseMoveUpDown.Name = "mouseMoveUpDown";
             this.mouseMoveUpDown.Size = new System.Drawing.Size(54, 21);
             this.mouseMoveUpDown.TabIndex = 7;
@@ -134,28 +122,39 @@
             // mouseMoveCheckBox
             // 
             this.mouseMoveCheckBox.AutoSize = true;
-            this.mouseMoveCheckBox.Location = new System.Drawing.Point(245, 165);
+            this.mouseMoveCheckBox.Checked = true;
+            this.mouseMoveCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.mouseMoveCheckBox.Location = new System.Drawing.Point(245, 184);
             this.mouseMoveCheckBox.Name = "mouseMoveCheckBox";
             this.mouseMoveCheckBox.Size = new System.Drawing.Size(92, 16);
             this.mouseMoveCheckBox.TabIndex = 8;
             this.mouseMoveCheckBox.Text = "마우스 이동:";
             this.mouseMoveCheckBox.UseVisualStyleBackColor = true;
+            this.mouseMoveCheckBox.CheckedChanged += new System.EventHandler(this.mouseMoveCheckBoxCheckedChanged);
             // 
             // delayCheckBox
             // 
             this.delayCheckBox.AutoSize = true;
-            this.delayCheckBox.Location = new System.Drawing.Point(245, 224);
+            this.delayCheckBox.Checked = true;
+            this.delayCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.delayCheckBox.Location = new System.Drawing.Point(245, 233);
             this.delayCheckBox.Name = "delayCheckBox";
             this.delayCheckBox.Size = new System.Drawing.Size(80, 16);
             this.delayCheckBox.TabIndex = 9;
             this.delayCheckBox.Text = "시간 지연:";
             this.delayCheckBox.UseVisualStyleBackColor = true;
+            this.delayCheckBox.CheckedChanged += new System.EventHandler(this.delayCheckBoxCheckedChanged);
             // 
             // delayUpDown
             // 
-            this.delayUpDown.Location = new System.Drawing.Point(245, 246);
+            this.delayUpDown.Location = new System.Drawing.Point(256, 255);
             this.delayUpDown.Maximum = new decimal(new int[] {
-            9000,
+            1000,
+            0,
+            0,
+            0});
+            this.delayUpDown.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
@@ -171,7 +170,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(305, 250);
+            this.label3.Location = new System.Drawing.Point(316, 259);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(85, 12);
             this.label3.TabIndex = 10;
@@ -180,17 +179,90 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(247, 131);
+            this.label4.Location = new System.Drawing.Point(245, 83);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(61, 12);
             this.label4.TabIndex = 12;
             this.label4.Text = "기록 옵션:";
             // 
+            // startCheckBox
+            // 
+            this.startCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.startCheckBox.Location = new System.Drawing.Point(80, 54);
+            this.startCheckBox.Name = "startCheckBox";
+            this.startCheckBox.Size = new System.Drawing.Size(159, 23);
+            this.startCheckBox.TabIndex = 13;
+            this.startCheckBox.Text = "기록 대기중";
+            this.startCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.startCheckBox.UseVisualStyleBackColor = true;
+            this.startCheckBox.CheckedChanged += new System.EventHandler(this.startCheckBoxCheckedChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(13, 361);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(38, 12);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "label2";
+            // 
+            // mouseWheelcheckBox
+            // 
+            this.mouseWheelcheckBox.AutoSize = true;
+            this.mouseWheelcheckBox.Checked = true;
+            this.mouseWheelcheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.mouseWheelcheckBox.Location = new System.Drawing.Point(245, 120);
+            this.mouseWheelcheckBox.Name = "mouseWheelcheckBox";
+            this.mouseWheelcheckBox.Size = new System.Drawing.Size(76, 16);
+            this.mouseWheelcheckBox.TabIndex = 15;
+            this.mouseWheelcheckBox.Text = "마우스 휠";
+            this.mouseWheelcheckBox.UseVisualStyleBackColor = true;
+            // 
+            // mouseButtonCheckBox
+            // 
+            this.mouseButtonCheckBox.AutoSize = true;
+            this.mouseButtonCheckBox.Checked = true;
+            this.mouseButtonCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.mouseButtonCheckBox.Location = new System.Drawing.Point(245, 142);
+            this.mouseButtonCheckBox.Name = "mouseButtonCheckBox";
+            this.mouseButtonCheckBox.Size = new System.Drawing.Size(92, 16);
+            this.mouseButtonCheckBox.TabIndex = 16;
+            this.mouseButtonCheckBox.Text = "마우스 버튼:";
+            this.mouseButtonCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // includePosCheckBox
+            // 
+            this.includePosCheckBox.AutoSize = true;
+            this.includePosCheckBox.Location = new System.Drawing.Point(257, 162);
+            this.includePosCheckBox.Name = "includePosCheckBox";
+            this.includePosCheckBox.Size = new System.Drawing.Size(76, 16);
+            this.includePosCheckBox.TabIndex = 17;
+            this.includePosCheckBox.Text = "위치 포함";
+            this.includePosCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // keyboardCheckBox
+            // 
+            this.keyboardCheckBox.AutoSize = true;
+            this.keyboardCheckBox.Checked = true;
+            this.keyboardCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.keyboardCheckBox.Location = new System.Drawing.Point(245, 98);
+            this.keyboardCheckBox.Name = "keyboardCheckBox";
+            this.keyboardCheckBox.Size = new System.Drawing.Size(76, 16);
+            this.keyboardCheckBox.TabIndex = 18;
+            this.keyboardCheckBox.Text = "키보드 키";
+            this.keyboardCheckBox.UseVisualStyleBackColor = true;
+            // 
             // RecordForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(397, 443);
+            this.ClientSize = new System.Drawing.Size(403, 441);
+            this.Controls.Add(this.keyboardCheckBox);
+            this.Controls.Add(this.includePosCheckBox);
+            this.Controls.Add(this.mouseButtonCheckBox);
+            this.Controls.Add(this.mouseWheelcheckBox);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.startCheckBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.delayUpDown);
             this.Controls.Add(this.label3);
@@ -201,7 +273,6 @@
             this.Controls.Add(this.testLabel);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
-            this.Controls.Add(this.recordButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.recordListBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -221,10 +292,8 @@
 
         private System.Windows.Forms.ListBox recordListBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button recordButton;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
-        private System.Windows.Forms.Timer recordTimer;
         private System.Windows.Forms.Label testLabel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown mouseMoveUpDown;
@@ -233,5 +302,11 @@
         private System.Windows.Forms.NumericUpDown delayUpDown;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox startCheckBox;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox mouseWheelcheckBox;
+        private System.Windows.Forms.CheckBox mouseButtonCheckBox;
+        private System.Windows.Forms.CheckBox includePosCheckBox;
+        private System.Windows.Forms.CheckBox keyboardCheckBox;
     }
 }

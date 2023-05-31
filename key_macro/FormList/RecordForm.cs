@@ -13,8 +13,8 @@ namespace key_macro.FormList
 {
     public partial class RecordForm : Form, IMessageFilter
     {
-        uint recordTime = 0;
-        bool recordEnable = false;
+        DateTime beforeTime;
+        Point previous;
         Record record = new Record();
         public RecordForm()
         {
@@ -38,57 +38,62 @@ namespace key_macro.FormList
                         break;
                 }
             }
-
             return false;
-        }
-        private void recordButtonClick(object sender, EventArgs e)
-        {
-            if (recordEnable) { 
-                recordEnable = false;
-                recordTimer.Enabled = false;
-            }
-            else { 
-                recordEnable = true;
-                recordTimer.Enabled = true;
-            }
         }
         private void mouseEvent(RawMouse mouse)
         {
             string text = $"{mouse.buttonFlags}, {mouse.rawButtons}, {mouse.buttonData}";
             testLabel.Text = text;
-            if (!recordEnable) return;
-            recordTimer.Enabled = false;
-            MouseBlock mouseBlock = null;
+            if (!startCheckBox.Checked) return;
+            Point current = Cursor.Position;
+            decimal distance = (decimal)Math.Sqrt((Math.Pow(current.X - previous.X, 2) + Math.Pow(current.Y - previous.Y, 2)));
 
-            WaitBlock waitBlock = new WaitBlock(recordTime, 0);
-            record.add(waitBlock);
-            if (mouse.buttonFlags == 0)
-                mouseBlock = new MouseBlock(Cursor.Position);
-            else
-                mouseBlock = new MouseBlock(mouse, Cursor.Position);
+            bool check1 = distance < mouseMoveUpDown.Value || mouseMoveCheckBox.Checked == false;
+            bool check2 = !mouseWheelcheckBox.Checked;
+            bool check3 = !mouseButtonCheckBox.Checked;
+            if (check1 || check2 || check3) return;
+            previous = current;
 
-            record.add(mouseBlock);
-
-            recordListBox.Items.Add(waitBlock.description);
-            recordListBox.Items.Add(mouseBlock.description);
-            recordTime = 0;
-            recordTimer.Enabled = true;
+            addRecordWait();
+            addRecordMouse(mouse);
         }
         private void keyboardEvent(RawKeyboard keyboard)
         {
             string text = $"VKey : {keyboard.vkey}, Code : {keyboard.makeCode} Msg: {keyboard.message}";
             testLabel.Text = text;
-            if (!recordEnable) return;
+            if (!startCheckBox.Checked) return;
 
-            WaitBlock waitBlock = new WaitBlock(recordTime, 0);
+            addRecordWait();
+            addRecordKeyboard(keyboard);
+        }
+        private void addRecordWait()
+        {
+            DateTime nowTime = DateTime.Now;
+            long overTime = (long)delayUpDown.Value;
+            long millisecond = (nowTime.Ticks - beforeTime.Ticks) / 10000;
+            if (millisecond < overTime || delayCheckBox.Checked == false) return;
+            beforeTime = nowTime;
+
+            WaitBlock waitBlock = new WaitBlock(millisecond, 0);
             record.add(waitBlock);
-            KeyBoardBlock keyBoardBlock = new KeyBoardBlock(keyboard);
-            record.add(keyBoardBlock);
-
             recordListBox.Items.Add(waitBlock.description);
-            recordListBox.Items.Add(keyBoardBlock.description);
-            recordTime = 0;
-            recordTimer.Enabled = true;
+        }
+        private void addRecordMouse(RawMouse mouse)
+        {
+            MouseBlock mouseBlock = null;
+            if (mouse.buttonFlags == 0)
+                mouseBlock = new MouseBlock(Cursor.Position);
+            else
+                mouseBlock = new MouseBlock(mouse, Cursor.Position);
+            
+            recordListBox.Items.Add(mouseBlock.description);
+            record.add(mouseBlock);
+        }
+        private void addRecordKeyboard(RawKeyboard keyboard)
+        {
+            KeyboardBlock keyboardBlock = new KeyboardBlock(keyboard);
+            record.add(keyboardBlock);
+            recordListBox.Items.Add(keyboardBlock.description);
         }
         private void okButtonClick(object sender, EventArgs e)
         {
@@ -98,11 +103,30 @@ namespace key_macro.FormList
         {
             this.DialogResult = DialogResult.OK;
         }
-        private void recordTimerTick(object sender, EventArgs e)
+        private void mouseMoveCheckBoxCheckedChanged(object sender, EventArgs e)
         {
-            recordTimer.Enabled = true;
-            recordTime += 1;
-            recordTimer.Enabled = false;
+            if(mouseMoveCheckBox.Checked)
+                mouseMoveUpDown.Enabled = true;
+            else
+                mouseMoveUpDown.Enabled = false;
+        }
+        private void delayCheckBoxCheckedChanged(object sender, EventArgs e)
+        {
+            if (delayCheckBox.Checked)
+                delayUpDown.Enabled = true;
+            else
+                delayUpDown.Enabled = false;
+        }
+        private void startCheckBoxCheckedChanged(object sender, EventArgs e)
+        {
+            if (startCheckBox.Checked)
+            {
+                beforeTime = DateTime.Now;
+                previous = Cursor.Position;
+                startCheckBox.Text = "매크로 기록중";
+            }
+            else
+                startCheckBox.Text = "기록 대기중";
         }
     }
 }
