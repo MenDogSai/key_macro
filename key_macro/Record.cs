@@ -28,10 +28,12 @@ namespace key_macro
         }
         public MouseBlock(RawMouse mouse, Point point)
         {
-            if (point.X < 0 && point.Y < 0)
-                point = Cursor.Position;
-            Point temp = Win32.screenToMousePosition(point);
-
+            Point temp = point;
+            description = "마우스 ";
+            if (point.X  > -1 && point.Y > -1) { 
+                temp = Win32.screenToMousePosition(point);
+                description = $"마우스 [{point.X},{point.Y}] ";
+            }
             input.type = Win32.INPUT_MOUSE;
             input.mi.dwExtraInfo = IntPtr.Zero;
             input.mi.dx = temp.X;
@@ -42,6 +44,11 @@ namespace key_macro
         }
         void act()
         {
+            if(input.mi.dx == -1 && input.mi.dy == -1) {
+                Point temp = Win32.screenToMousePosition(Cursor.Position);
+                input.mi.dx = temp.X;
+                input.mi.dy = temp.Y;
+            }
             INPUT[] inputs = { input };
             Win32.SendInput(1, inputs, Marshal.SizeOf(typeof(INPUT)));
         }
@@ -50,50 +57,50 @@ namespace key_macro
             switch (buttons)
             {
                 case RawMouseButtons.LEFT_UP:
-                    description = "마우스 [왼쪽 버튼] → 누름";
+                    description += "[왼쪽 버튼] → 누름";
                     return MOUSEEVENTF.MOUSEEVENTF_LEFTUP;
 
                 case RawMouseButtons.LEFT_DOWN:
-                    description = "마우스 [왼쪽 버튼] → 뗌";
+                    description = "[왼쪽 버튼] → 뗌";
                     return MOUSEEVENTF.MOUSEEVENTF_LEFTDOWN;
 
                 case RawMouseButtons.RIGHT_UP:
-                    description = "마우스 [오른쪽 버튼] → 누름";
+                    description = "[오른쪽 버튼] → 누름";
                     return MOUSEEVENTF.MOUSEEVENTF_RIGHTUP;
 
                 case RawMouseButtons.RIGHT_DOWN:
-                    description = "마우스 [오른쪽 버튼] → 뗌";
+                    description = "[오른쪽 버튼] → 뗌";
                     return MOUSEEVENTF.MOUSEEVENTF_RIGHTDOWN;
 
                 case RawMouseButtons.MIDDLE_UP:
-                    description = "마우스 [중간 버튼] → 누름";
+                    description = "[중간 버튼] → 누름";
                     return MOUSEEVENTF.MOUSEEVENTF_MIDDLEUP;
 
                 case RawMouseButtons.MIDDLE_DOWN:
-                    description = "마우스 [오른쪽 버튼] → 뗌";
+                    description = "[오른쪽 버튼] → 뗌";
                     return MOUSEEVENTF.MOUSEEVENTF_MIDDLEDOWN;
 
                 case RawMouseButtons.BUTTON4_UP:
-                    description = "마우스 [X1 버튼] → 누름";
+                    description = "[X1 버튼] → 누름";
                     return MOUSEEVENTF.MOUSEEVENTF_XUP;
 
                 case RawMouseButtons.BUTTON4_DOWN:
-                    description = "마우스 [X1 버튼] → 뗌";
+                    description = "[X1 버튼] → 뗌";
                     return MOUSEEVENTF.MOUSEEVENTF_XDOWN;
 
                 case RawMouseButtons.BUTTON5_UP:
-                    description = "마우스 [X2 버튼] → 누름";
+                    description = "[X2 버튼] → 누름";
                     return MOUSEEVENTF.MOUSEEVENTF_XUP;
 
                 case RawMouseButtons.BUTTON5_DOWN:
-                    description = "마우스 [X2 버튼] → 뗌";
+                    description = "[X2 버튼] → 뗌";
                     return MOUSEEVENTF.MOUSEEVENTF_XDOWN;
 
                 case RawMouseButtons.MOUSE_WHELL:
-                    description = "마우스 [휠] → ";
+                    description = "[휠] → ";
                     return MOUSEEVENTF.MOUSEEVENTF_WHEEL;
             }
-            description = "";
+            description = "마우스 ";
             return MOUSEEVENTF.NONE;
         }
         private int getMouseData(RawMouseButtons buttons, ushort buttonData)
@@ -119,7 +126,6 @@ namespace key_macro
     }
     public class KeyboardBlock
     {
-
         public int index;
         public string description;
         private INPUT input;
@@ -209,10 +215,19 @@ namespace key_macro
     public class Record
     {
         int runIndex = 0;
+        public string name = "";
         public List<MacroBlock> blocks = new List<MacroBlock>();
+        
         public Record()
         {
 
+        }
+        public Record(Record target)
+        {
+            this.runIndex = target.runIndex;
+            this.name = target.name;
+            foreach (MacroBlock block in target.blocks)
+                this.blocks.Add(block);
         }
         public void add(MouseBlock mouse)
         {

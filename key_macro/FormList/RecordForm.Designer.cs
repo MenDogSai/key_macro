@@ -33,7 +33,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
-            this.testLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.mouseMoveUpDown = new System.Windows.Forms.NumericUpDown();
             this.mouseMoveCheckBox = new System.Windows.Forms.CheckBox();
@@ -42,7 +41,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.startCheckBox = new System.Windows.Forms.CheckBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.mouseWheelcheckBox = new System.Windows.Forms.CheckBox();
             this.mouseButtonCheckBox = new System.Windows.Forms.CheckBox();
             this.includePosCheckBox = new System.Windows.Forms.CheckBox();
@@ -88,15 +86,6 @@
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButtonClick);
-            // 
-            // testLabel
-            // 
-            this.testLabel.AutoSize = true;
-            this.testLabel.Location = new System.Drawing.Point(13, 339);
-            this.testLabel.Name = "testLabel";
-            this.testLabel.Size = new System.Drawing.Size(38, 12);
-            this.testLabel.TabIndex = 5;
-            this.testLabel.Text = "label2";
             // 
             // label2
             // 
@@ -197,20 +186,9 @@
             this.startCheckBox.UseVisualStyleBackColor = true;
             this.startCheckBox.CheckedChanged += new System.EventHandler(this.startCheckBoxCheckedChanged);
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 361);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(38, 12);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "label2";
-            // 
             // mouseWheelcheckBox
             // 
             this.mouseWheelcheckBox.AutoSize = true;
-            this.mouseWheelcheckBox.Checked = true;
-            this.mouseWheelcheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.mouseWheelcheckBox.Location = new System.Drawing.Point(245, 120);
             this.mouseWheelcheckBox.Name = "mouseWheelcheckBox";
             this.mouseWheelcheckBox.Size = new System.Drawing.Size(76, 16);
@@ -229,6 +207,7 @@
             this.mouseButtonCheckBox.TabIndex = 16;
             this.mouseButtonCheckBox.Text = "마우스 버튼:";
             this.mouseButtonCheckBox.UseVisualStyleBackColor = true;
+            this.mouseButtonCheckBox.CheckedChanged += new System.EventHandler(this.mouseButtonCheckBoxCheckedChanged);
             // 
             // includePosCheckBox
             // 
@@ -261,7 +240,6 @@
             this.Controls.Add(this.includePosCheckBox);
             this.Controls.Add(this.mouseButtonCheckBox);
             this.Controls.Add(this.mouseWheelcheckBox);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.startCheckBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.delayUpDown);
@@ -270,7 +248,6 @@
             this.Controls.Add(this.mouseMoveCheckBox);
             this.Controls.Add(this.mouseMoveUpDown);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.testLabel);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.label1);
@@ -294,7 +271,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
-        private System.Windows.Forms.Label testLabel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown mouseMoveUpDown;
         private System.Windows.Forms.CheckBox mouseMoveCheckBox;
@@ -303,7 +279,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox startCheckBox;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox mouseWheelcheckBox;
         private System.Windows.Forms.CheckBox mouseButtonCheckBox;
         private System.Windows.Forms.CheckBox includePosCheckBox;

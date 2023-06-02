@@ -13,9 +13,9 @@ namespace key_macro.FormList
 {
     public partial class RecordForm : Form, IMessageFilter
     {
-        DateTime beforeTime;
-        Point previous;
-        Record record = new Record();
+        private DateTime beforeTime;
+        private Point previous;
+        private Record record = new Record();
         public RecordForm()
         {
             InitializeComponent();
@@ -42,25 +42,27 @@ namespace key_macro.FormList
         }
         private void mouseEvent(RawMouse mouse)
         {
-            string text = $"{mouse.buttonFlags}, {mouse.rawButtons}, {mouse.buttonData}";
-            testLabel.Text = text;
+            //string text = $"{mouse.buttonFlags}, {mouse.rawButtons}, {mouse.buttonData}";
             if (!startCheckBox.Checked) return;
+
             Point current = Cursor.Position;
             decimal distance = (decimal)Math.Sqrt((Math.Pow(current.X - previous.X, 2) + Math.Pow(current.Y - previous.Y, 2)));
 
-            bool check1 = distance < mouseMoveUpDown.Value || mouseMoveCheckBox.Checked == false;
-            bool check2 = !mouseWheelcheckBox.Checked;
-            bool check3 = !mouseButtonCheckBox.Checked;
-            if (check1 || check2 || check3) return;
+            RawMouseButtons buttons = mouse.buttonFlags;
+            if (buttons == RawMouseButtons.NONE && (distance < mouseMoveUpDown.Value || !mouseMoveCheckBox.Checked)) return;
+            if (buttons != RawMouseButtons.NONE && !mouseButtonCheckBox.Checked) return;
+            if (buttons == RawMouseButtons.MOUSE_WHELL && !mouseWheelcheckBox.Checked) return;
+
             previous = current;
+            if (buttons != RawMouseButtons.NONE && !includePosCheckBox.Checked)
+                current = new Point(-1, -1);
 
             addRecordWait();
-            addRecordMouse(mouse);
+            addRecordMouse(mouse, current);
         }
         private void keyboardEvent(RawKeyboard keyboard)
         {
-            string text = $"VKey : {keyboard.vkey}, Code : {keyboard.makeCode} Msg: {keyboard.message}";
-            testLabel.Text = text;
+            //string text = $"VKey : {keyboard.vkey}, Code : {keyboard.makeCode} Msg: {keyboard.message}";
             if (!startCheckBox.Checked) return;
 
             addRecordWait();
@@ -78,14 +80,14 @@ namespace key_macro.FormList
             record.add(waitBlock);
             recordListBox.Items.Add(waitBlock.description);
         }
-        private void addRecordMouse(RawMouse mouse)
+        private void addRecordMouse(RawMouse mouse, Point current)
         {
             MouseBlock mouseBlock = null;
-            if (mouse.buttonFlags == 0)
-                mouseBlock = new MouseBlock(Cursor.Position);
+            if (mouse.buttonFlags == RawMouseButtons.NONE)
+                mouseBlock = new MouseBlock(current);
             else
-                mouseBlock = new MouseBlock(mouse, Cursor.Position);
-            
+                mouseBlock = new MouseBlock(mouse, current);
+
             recordListBox.Items.Add(mouseBlock.description);
             record.add(mouseBlock);
         }
@@ -97,15 +99,17 @@ namespace key_macro.FormList
         }
         private void okButtonClick(object sender, EventArgs e)
         {
+            record.name = "Macro Rec. ";
             this.DialogResult = DialogResult.OK;
         }
         private void cancelButtonClick(object sender, EventArgs e)
         {
+            record.clear();
             this.DialogResult = DialogResult.OK;
         }
         private void mouseMoveCheckBoxCheckedChanged(object sender, EventArgs e)
         {
-            if(mouseMoveCheckBox.Checked)
+            if (mouseMoveCheckBox.Checked)
                 mouseMoveUpDown.Enabled = true;
             else
                 mouseMoveUpDown.Enabled = false;
@@ -127,6 +131,17 @@ namespace key_macro.FormList
             }
             else
                 startCheckBox.Text = "기록 대기중";
+        }
+        private void mouseButtonCheckBoxCheckedChanged(object sender, EventArgs e)
+        {
+            if (mouseButtonCheckBox.Checked)
+                includePosCheckBox.Enabled = true;
+            else
+                includePosCheckBox.Enabled = false;
+        }
+        public Record GetRecord()
+        {
+            return new Record(record);
         }
     }
 }

@@ -42,8 +42,6 @@
             this.editButton = new System.Windows.Forms.Button();
             this.copyButton = new System.Windows.Forms.Button();
             this.deleteButton = new System.Windows.Forms.Button();
-            this.downButton = new System.Windows.Forms.Button();
-            this.upButton = new System.Windows.Forms.Button();
             this.stopRadioButton = new System.Windows.Forms.RadioButton();
             this.runRadioButton = new System.Windows.Forms.RadioButton();
             this.iconTimer = new System.Windows.Forms.Timer(this.components);
@@ -169,6 +167,7 @@
             this.copyButton.TabIndex = 13;
             this.copyButton.Text = "복사";
             this.copyButton.UseVisualStyleBackColor = true;
+            this.copyButton.Click += new System.EventHandler(this.copyButtonClick);
             // 
             // deleteButton
             // 
@@ -179,26 +178,7 @@
             this.deleteButton.TabIndex = 14;
             this.deleteButton.Text = "삭제";
             this.deleteButton.UseVisualStyleBackColor = true;
-            // 
-            // downButton
-            // 
-            this.downButton.Font = new System.Drawing.Font("Gulim", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.downButton.Location = new System.Drawing.Point(210, 259);
-            this.downButton.Name = "downButton";
-            this.downButton.Size = new System.Drawing.Size(26, 23);
-            this.downButton.TabIndex = 15;
-            this.downButton.Text = "▼";
-            this.downButton.UseVisualStyleBackColor = true;
-            // 
-            // upButton
-            // 
-            this.upButton.Font = new System.Drawing.Font("Gulim", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.upButton.Location = new System.Drawing.Point(178, 259);
-            this.upButton.Name = "upButton";
-            this.upButton.Size = new System.Drawing.Size(26, 23);
-            this.upButton.TabIndex = 16;
-            this.upButton.Text = "▲";
-            this.upButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.deleteButtonClick);
             // 
             // stopRadioButton
             // 
@@ -236,8 +216,6 @@
             this.ClientSize = new System.Drawing.Size(314, 382);
             this.Controls.Add(this.stopRadioButton);
             this.Controls.Add(this.runRadioButton);
-            this.Controls.Add(this.upButton);
-            this.Controls.Add(this.downButton);
             this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.copyButton);
             this.Controls.Add(this.editButton);
@@ -277,8 +255,6 @@
         private System.Windows.Forms.Button editButton;
         private System.Windows.Forms.Button copyButton;
         private System.Windows.Forms.Button deleteButton;
-        private System.Windows.Forms.Button downButton;
-        private System.Windows.Forms.Button upButton;
         private System.Windows.Forms.RadioButton stopRadioButton;
         private System.Windows.Forms.RadioButton runRadioButton;
         private System.Windows.Forms.Timer iconTimer;

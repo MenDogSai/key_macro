@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -18,6 +19,7 @@ namespace key_macro
         private StatusForm statusForm = null;
         private const int CP_NOCLOSE_BUTTON = 0x200;
         private bool iconCheck = false;
+        private List<Record> records = new List<Record>();
         public MainForm()
         {
             InitializeComponent();
@@ -83,8 +85,6 @@ namespace key_macro
             editButton.Enabled = false;
             copyButton.Enabled = false;
             deleteButton.Enabled = false;
-            upButton.Enabled = false;
-            downButton.Enabled = false;
             debugButton.Enabled = true;
             iconTimer.Enabled = true;
         }
@@ -99,8 +99,6 @@ namespace key_macro
             editButton.Enabled = true;
             copyButton.Enabled = true;
             deleteButton.Enabled = true;
-            upButton.Enabled = true;
-            downButton.Enabled = true;
             debugButton.Enabled = false;
             iconTimer.Enabled = false;
             this.Icon = global::key_macro.Properties.Resources.key_macro_ico;
@@ -119,15 +117,53 @@ namespace key_macro
             }
             iconTimer.Enabled = true;
         }
-
         private void recordButtonClick(object sender, EventArgs e)
         {
             RecordForm recordForm = new RecordForm();
             recordForm.ShowDialog();
             if(recordForm.DialogResult == DialogResult.OK)
             {
-                recordForm.Close();
+                Record record = recordForm.GetRecord();
+                recordForm.Dispose();
+                if (record.name == "") return;
+                int cnt = getDuplicateNumber("Macro Rec", 1);
+                record.name += cnt.ToString();
+                records.Add(record);
+                macroListBox.Items.Add(record.name);
             }
+        }
+        private void copyButtonClick(object sender, EventArgs e)
+        {
+            int index = macroListBox.SelectedIndex;
+            if(index == -1) return;
+            Record clone = new Record(records[index]);
+            clone.name = "Macro Clone. ";
+            int cnt = getDuplicateNumber("Macro Clone", 1);
+            clone.name += cnt.ToString();
+            records.Add(clone);
+            macroListBox.Items.Add(clone.name);
+        }
+        private void deleteButtonClick(object sender, EventArgs e)
+        {
+            int index = macroListBox.SelectedIndex;
+            if (index == -1) return;
+            macroListBox.Items.RemoveAt(index);
+            records.RemoveAt(index);
+        }
+        /// <summary>
+        /// List 상자에서 매개변수인 name과 같은 중복인 이름이 있는지 찾는 함수
+        /// </summary>
+        private int getDuplicateNumber(String name, int cnt)
+        {
+            foreach (var item in macroListBox.Items)
+            {
+                string[] temp = $"{item}".Split('.');
+                if (temp.Length != 2) continue;
+                if (name != temp[0]) continue;
+                if (Convert.ToInt32(temp[1]) == cnt)
+                    cnt++;
+            }
+            return cnt;
         }
     }
 }
