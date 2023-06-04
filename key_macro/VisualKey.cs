@@ -10,9 +10,9 @@ namespace Key_macro
     static public class VisualKey
     {
         const int KEY_MAX = 256;
-        static private string[] name = new string[KEY_MAX];
-        static private string[] description = new string[KEY_MAX];
-        static public void initialize() 
+        static private readonly string[] name = new string[KEY_MAX];
+        static private readonly string[] description = new string[KEY_MAX];
+        static public void Initialize() 
         {
             for(int i = 0; i < KEY_MAX; i++)
             {
@@ -165,12 +165,15 @@ namespace Key_macro
             name[0xDD] = "]}";  description[0xDD] = "]} 키";
             name[0xDE] = "'\""; description[0xDE] = "'\" 키";
         }
-        static public string getKeyDescription(int key)
+        static public string GetKeyDescription(int key)
         {
-            key = key & 0xFF;
-            return description[key];
+            return description[key & 0xFF];
         }
-        static public int getKeyIndex(string keyName) 
+        static public string GetKeyName(int key)
+        {
+            return name[key & 0xFF];
+        }
+        static public int GetKeyIndex(string keyName) 
         { 
             for(int i = 0; i < KEY_MAX;  i++)
                 if (name[i] == keyName) 

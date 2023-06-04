@@ -3,7 +3,7 @@
 
 ## 제작환경
 * Windows 10 64bit
-* Microsoft Visual Studio Community 2022 (64-bit) - Version 17.6.1
+* Microsoft Visual Studio Community 2022 (64-bit) - Version 17.6.2
 * .NET Framework 4.8
 
 ## 참조
@@ -11,7 +11,9 @@
 * https://www.sysnet.pe.kr/2/0/11615
 
 ## 추가 작업 예정
-*	RecordForm 폼의 기록 시작 단축키 설정폼에 추가 할 것
+* [ ]RecordForm 폼의 기록 시작 단축키 설정폼에 추가 할 것
+* [ ]Record 의 생성자 중 Record 자체를 받아서 생성할 경우 깊은 복사 가능한지 확인할 것
+* [ ]Record에서 run 메서드 에서 루프 엑션 구현 미흡함
 
 ## 현황
 * [2023-06-02] RecordForm 최소한의 동작 구현

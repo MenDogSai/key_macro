@@ -11,3 +11,29 @@ C:\Users\YJ\Desktop\key_macro\key_macro\obj\Debug\key_macro.csproj.GenerateResou
 C:\Users\YJ\Desktop\key_macro\key_macro\obj\Debug\key_macro.csproj.CoreCompileInputs.cache
 C:\Users\YJ\Desktop\key_macro\key_macro\obj\Debug\key_macro.exe
 C:\Users\YJ\Desktop\key_macro\key_macro\obj\Debug\key_macro.pdb
+C:\Users\ssak0\Source\Repos\MenDogSai\key_macro\key_macro\bin\Debug\key_macro.exe.config
+C:\Users\ssak0\Source\Repos\MenDogSai\key_macro\key_macro\bin\Debug\key_macro.exe
+C:\Users\ssak0\Source\Repos\MenDogSai\key_macro\key_macro\bin\Debug\key_macro.pdb
+C:\Users\ssak0\Source\Repos\MenDogSai\key_macro\key_macro\obj\Debug\key_macro.csproj.AssemblyReference.cache
+C:\Users\ssak0\Source\Repos\MenDogSai\key_macro\key_macro\obj\Debug\key_macro.csproj.SuggestedBindingRedirects.cache
+C:\Users\ssak0\Source\Repos\MenDogSai\key_macro\key_macro\obj\Debug\key_macro.FormList.RecordForm.resources
+C:\Users\ssak0\Source\Repos\MenDogSai\key_macro\key_macro\obj\Debug\key_macro.FormList.StatusForm.resources
+C:\Users\ssak0\Source\Repos\MenDogSai\key_macro\key_macro\obj\Debug\key_macro.MainForm.resources
+C:\Users\ssak0\Source\Repos\MenDogSai\key_macro\key_macro\obj\Debug\key_macro.Properties.Resources.resources
+C:\Users\ssak0\Source\Repos\MenDogSai\key_macro\key_macro\obj\Debug\key_macro.csproj.GenerateResource.cache
+C:\Users\ssak0\Source\Repos\MenDogSai\key_macro\key_macro\obj\Debug\key_macro.csproj.CoreCompileInputs.cache
+C:\Users\ssak0\Source\Repos\MenDogSai\key_macro\key_macro\obj\Debug\key_macro.exe
+C:\Users\ssak0\Source\Repos\MenDogSai\key_macro\key_macro\obj\Debug\key_macro.pdb
+C:\Users\ssak0\OneDrive\바탕 화면\project\key_macro\key_macro\bin\Debug\key_macro.exe.config
+C:\Users\ssak0\OneDrive\바탕 화면\project\key_macro\key_macro\bin\Debug\key_macro.exe
+C:\Users\ssak0\OneDrive\바탕 화면\project\key_macro\key_macro\bin\Debug\key_macro.pdb
+C:\Users\ssak0\OneDrive\바탕 화면\project\key_macro\key_macro\obj\Debug\key_macro.csproj.AssemblyReference.cache
+C:\Users\ssak0\OneDrive\바탕 화면\project\key_macro\key_macro\obj\Debug\key_macro.csproj.SuggestedBindingRedirects.cache
+C:\Users\ssak0\OneDrive\바탕 화면\project\key_macro\key_macro\obj\Debug\key_macro.FormList.RecordForm.resources
+C:\Users\ssak0\OneDrive\바탕 화면\project\key_macro\key_macro\obj\Debug\key_macro.FormList.StatusForm.resources
+C:\Users\ssak0\OneDrive\바탕 화면\project\key_macro\key_macro\obj\Debug\key_macro.MainForm.resources
+C:\Users\ssak0\OneDrive\바탕 화면\project\key_macro\key_macro\obj\Debug\key_macro.Properties.Resources.resources
+C:\Users\ssak0\OneDrive\바탕 화면\project\key_macro\key_macro\obj\Debug\key_macro.csproj.GenerateResource.cache
+C:\Users\ssak0\OneDrive\바탕 화면\project\key_macro\key_macro\obj\Debug\key_macro.csproj.CoreCompileInputs.cache
+C:\Users\ssak0\OneDrive\바탕 화면\project\key_macro\key_macro\obj\Debug\key_macro.exe
+C:\Users\ssak0\OneDrive\바탕 화면\project\key_macro\key_macro\obj\Debug\key_macro.pdb

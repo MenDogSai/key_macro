@@ -217,7 +217,7 @@
             // imeCheckTimer
             // 
             this.imeCheckTimer.Interval = 1;
-            this.imeCheckTimer.Tick += new System.EventHandler(this.imeCheckTimerTick);
+            this.imeCheckTimer.Tick += new System.EventHandler(this.ImeCheckTimerTick);
             // 
             // StatusForm
             // 

@@ -2,6 +2,7 @@
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -13,12 +14,11 @@ namespace key_macro
 {
     public class MouseBlock
     {
-        public int index;
         public string description;
         private INPUT input;
         public MouseBlock(Point point)
         {
-            Point temp = Win32.screenToMousePosition(point);
+            Point temp = Win32.ScreenToMousePosition(point);
             input.type = Win32.INPUT_MOUSE;
             input.mi.dx = temp.X;
             input.mi.dy = temp.Y;
@@ -31,7 +31,7 @@ namespace key_macro
             Point temp = point;
             description = "마우스 ";
             if (point.X  > -1 && point.Y > -1) { 
-                temp = Win32.screenToMousePosition(point);
+                temp = Win32.ScreenToMousePosition(point);
                 description = $"마우스 [{point.X},{point.Y}] ";
             }
             input.type = Win32.INPUT_MOUSE;
@@ -39,20 +39,21 @@ namespace key_macro
             input.mi.dx = temp.X;
             input.mi.dy = temp.Y;
             input.mi.dwFlags   = MOUSEEVENTF.MOUSEEVENTF_MOVE | MOUSEEVENTF.MOUSEEVENTF_VIRTUALDESK | MOUSEEVENTF.MOUSEEVENTF_ABSOLUTE;
-            input.mi.dwFlags  |= getMouseFlag(mouse.buttonFlags);
-            input.mi.mouseData = getMouseData(mouse.buttonFlags, mouse.buttonData);
+            input.mi.dwFlags  |= GetMouseFlag(mouse.buttonFlags);
+            input.mi.mouseData = GetMouseData(mouse.buttonFlags, mouse.buttonData);
         }
-        void act()
+        public bool Act()
         {
             if(input.mi.dx == -1 && input.mi.dy == -1) {
-                Point temp = Win32.screenToMousePosition(Cursor.Position);
+                Point temp = Win32.ScreenToMousePosition(Cursor.Position);
                 input.mi.dx = temp.X;
                 input.mi.dy = temp.Y;
             }
             INPUT[] inputs = { input };
             Win32.SendInput(1, inputs, Marshal.SizeOf(typeof(INPUT)));
+            return true;
         }
-        private MOUSEEVENTF getMouseFlag(RawMouseButtons buttons)
+        private MOUSEEVENTF GetMouseFlag(RawMouseButtons buttons)
         {
             switch (buttons)
             {
@@ -103,7 +104,7 @@ namespace key_macro
             description = "마우스 ";
             return MOUSEEVENTF.NONE;
         }
-        private int getMouseData(RawMouseButtons buttons, ushort buttonData)
+        private int GetMouseData(RawMouseButtons buttons, ushort buttonData)
         {
             const int XBUTTON1 = 1;
             const int XBUTTON2 = 2;
@@ -126,7 +127,6 @@ namespace key_macro
     }
     public class KeyboardBlock
     {
-        public int index;
         public string description;
         private INPUT input;
 
@@ -137,133 +137,190 @@ namespace key_macro
             input.ki.wScan = keyboard.makeCode;
             input.ki.dwFlags = (keyboard.message & PRESSED) * 2;
             input.ki.dwExtraInfo = IntPtr.Zero;
-            description = $"키보드 [{VisualKey.getKeyDescription(keyboard.vkey)}] → ";
+            description = $"키보드 [{VisualKey.GetKeyDescription(keyboard.vkey)}] → ";
             description += ((keyboard.message & PRESSED) == 0) ? "누름" : "뗌";
         }
-        void act()
+        public bool Act()
         {
             INPUT[] inputs = { input };
             Win32.SendInput(1, inputs, Marshal.SizeOf(typeof(INPUT)));
+            return true;
         }
     }
     public class WaitBlock
     {
-        public int index;
         public string description;
-        long time;
-        uint flag;
-        public WaitBlock(long time, uint flag)
+        private readonly long endTime;
+        private DateTime beforeTime;
+        public WaitBlock(long time)
         {
-            this.time = time;
-            this.flag = flag;
+            this.endTime = time;
             description = $"시간지연 {time/1000}.{time%1000} 초";
         }
-        void act(ref long time)
+        public bool Act()
         {
-            this.time = time;
+            DateTime nowTime = DateTime.Now;
+            long currentTime = (nowTime.Ticks - beforeTime.Ticks) / 10000;
+            beforeTime = nowTime;
+            return currentTime < endTime;
         }
     }
+    /// <summary>
+    /// Count 값이 -1 값이면 무한 반복
+    /// </summary>
     public class LoopBlock
     {
-        public int index;
-        uint start;
-        uint end;
-        uint flag;
-        void act()
-        {
+        public string description;
+        private readonly int start = 0;
+        private int count = 0;
 
+        public LoopBlock(int start, int count)
+        {
+            this.description = $"반복 횟수:{count}";
+            this.start = start;
+            this.count = count;
+
+            //카운트 값이 0 이면 -1로 변환 해서 무한 반복으로 변경
+            if (count == 0)
+            {
+               this.description = "무한 반복";
+               this.count = -1;
+            }
+        }
+        public int Act(int index)
+        {
+            if (count == 0)
+                return index + 1;
+
+            count = (count < 0)? -1: count - 1;
+            return start;
         }
     }
     public enum BlockName
     {
-        NONE_BLOCK = 0,
-        MOUSE_BLOCK = 1,
-        KEYBOARD_BLOCK = 2,
-        WAIT_BLOCK = 3,
-        LOOP_BLOCK = 4,
+        MouseBlock = 0,
+        KeyboardBlock,
+        WaitBlock,
+        LoopBlock,
     }
     public class MacroBlock
     {
+        public BlockName name;
         public MouseBlock mouse = null;
         public KeyboardBlock keyboard = null;
         public WaitBlock wait = null;
         public LoopBlock loop = null;
-        public MacroBlock(MacroBlock macroBlock)
-        {
-            this.mouse = macroBlock.mouse;
-            this.keyboard = macroBlock.keyboard;
-            this.wait = macroBlock.wait;
-            this.loop = macroBlock.loop;
-        }
         public MacroBlock(MouseBlock mouse)
         {
+            this.name = BlockName.MouseBlock;
             this.mouse = mouse;
         }
         public MacroBlock (KeyboardBlock keyboard) 
         {
+            this.name = BlockName.KeyboardBlock;
             this.keyboard = keyboard;
         }
         public MacroBlock(WaitBlock wait) 
         {
+            this.name = BlockName.WaitBlock;
             this.wait = wait;
         }
         public MacroBlock(LoopBlock loop) 
         {
+            this.name = BlockName.LoopBlock;
             this.loop = loop;
         }
     }
     public class Record
     {
-        int runIndex = 0;
         public string name = "";
         public List<MacroBlock> blocks = new List<MacroBlock>();
-        
+
+        private bool stopFlag = false;
         public Record()
         {
 
         }
         public Record(Record target)
         {
-            this.runIndex = target.runIndex;
             this.name = target.name;
             foreach (MacroBlock block in target.blocks)
+            {
                 this.blocks.Add(block);
+            }
         }
-        public void add(MouseBlock mouse)
+        public void Add(MouseBlock mouse)
         {
             blocks.Add(new MacroBlock(mouse));
         }
-        public void add(KeyboardBlock keyboard)
+        public void Add(KeyboardBlock keyboard)
         {
             blocks.Add(new MacroBlock(keyboard));
         }
-        public void add(WaitBlock wait)
+        public void Add(WaitBlock wait)
         {
             blocks.Add(new MacroBlock(wait));
         }
-        public void add(LoopBlock loop)
+        public void Add(LoopBlock loop)
         {
             blocks.Add(new MacroBlock(loop));
         }
-        public void clear()
+        public void Clear()
         {
             blocks.Clear();
         }
-        public void insert(int  index, MouseBlock mouse) 
+        public void Insert(int  index, MouseBlock mouse) 
         {
             blocks.Insert(index, new MacroBlock(mouse));
         }
-        public void insert(int index, KeyboardBlock keyboard)
+        public void Insert(int index, KeyboardBlock keyboard)
         {
             blocks.Insert(index, new MacroBlock(keyboard));
         }
-        public void insert(int index, WaitBlock wait) 
+        public void Insert(int index, WaitBlock wait) 
         {
             blocks.Insert(index, new MacroBlock(wait));
         }
-        public void insert(int index, LoopBlock loop)
+        public void Insert(int index, LoopBlock loop)
         {
             blocks.Insert(index, new MacroBlock(loop));
         }
-    }
+        public void Run()
+        {
+            stopFlag = false;
+            Task task = new Task(() => this.Execute());
+            task.Start();
+        }
+        public void Stop()
+        {
+            stopFlag = true;
+        }
+        private void Execute()
+        {
+            if (blocks.Count == 0) return;
+            int i = 0;
+            while (i < blocks.Count)
+            {
+                switch (blocks[i].name)
+                {
+                    case BlockName.MouseBlock:
+                        if(blocks[i].mouse.Act())
+                            i++; 
+                        break;
+                    case BlockName.KeyboardBlock:
+                        if (blocks[i].keyboard.Act())
+                            i++; 
+                        break;
+                    case BlockName.WaitBlock:
+                        if (blocks[i].wait.Act())
+                            i++; 
+                        break;
+                    case BlockName.LoopBlock:
+                            i = blocks[i].loop.Act(i);
+                        break;
+                }
+                if (stopFlag) break;
+            }
+        }
+    }//end of Record class
 }

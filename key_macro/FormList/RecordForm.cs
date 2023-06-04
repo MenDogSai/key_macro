@@ -11,36 +11,18 @@ using System.Windows.Forms;
 
 namespace key_macro.FormList
 {
-    public partial class RecordForm : Form, IMessageFilter
+    public partial class RecordForm : Form
     {
+        private DateTime recordTime;
         private DateTime beforeTime;
+        private long recordTimeTotal;
         private Point previous;
-        private Record record = new Record();
+        private readonly Record record = new Record();
         public RecordForm()
         {
             InitializeComponent();
-            Application.AddMessageFilter(this);
         }
-        public bool PreFilterMessage(ref Message msg)
-        {
-            if (msg.Msg == Win32.WM_INPUT)
-            {
-                RawInput raw = Win32.GetDeviceID(msg);
-
-                switch (raw.Header.type)
-                {
-                    case RawInputType.KEYBOARD:
-                        keyboardEvent(raw.Keyboard);
-                        break;
-
-                    case RawInputType.MOUSE:
-                        mouseEvent(raw.Mouse);
-                        break;
-                }
-            }
-            return false;
-        }
-        private void mouseEvent(RawMouse mouse)
+        public void MouseEvent(RawMouse mouse)
         {
             //string text = $"{mouse.buttonFlags}, {mouse.rawButtons}, {mouse.buttonData}";
             if (!startCheckBox.Checked) return;
@@ -57,18 +39,18 @@ namespace key_macro.FormList
             if (buttons != RawMouseButtons.NONE && !includePosCheckBox.Checked)
                 current = new Point(-1, -1);
 
-            addRecordWait();
-            addRecordMouse(mouse, current);
+            AddRecordWait();
+            AddRecordMouse(mouse, current);
         }
-        private void keyboardEvent(RawKeyboard keyboard)
+        public void KeyboardEvent(RawKeyboard keyboard)
         {
             //string text = $"VKey : {keyboard.vkey}, Code : {keyboard.makeCode} Msg: {keyboard.message}";
             if (!startCheckBox.Checked) return;
 
-            addRecordWait();
-            addRecordKeyboard(keyboard);
+            AddRecordWait();
+            AddRecordKeyboard(keyboard);
         }
-        private void addRecordWait()
+        private void AddRecordWait()
         {
             DateTime nowTime = DateTime.Now;
             long overTime = (long)delayUpDown.Value;
@@ -76,63 +58,85 @@ namespace key_macro.FormList
             if (millisecond < overTime || delayCheckBox.Checked == false) return;
             beforeTime = nowTime;
 
-            WaitBlock waitBlock = new WaitBlock(millisecond, 0);
-            record.add(waitBlock);
+            WaitBlock waitBlock = new WaitBlock(millisecond);
+            record.Add(waitBlock);
+            record.Add(waitBlock);
             recordListBox.Items.Add(waitBlock.description);
+ 
+            millisecond = (nowTime.Ticks - recordTime.Ticks) / 10000;
+            recordTimeTotal += millisecond;
+            recordLabel.Text = $"{recordListBox.Items.Count}개의 항목이 기록 됨 ({recordTimeTotal / 1000}.{recordTimeTotal % 1000} 초)";
         }
-        private void addRecordMouse(RawMouse mouse, Point current)
+        private void AddRecordMouse(RawMouse mouse, Point current)
         {
-            MouseBlock mouseBlock = null;
+            MouseBlock mouseBlock;
             if (mouse.buttonFlags == RawMouseButtons.NONE)
                 mouseBlock = new MouseBlock(current);
             else
                 mouseBlock = new MouseBlock(mouse, current);
 
             recordListBox.Items.Add(mouseBlock.description);
-            record.add(mouseBlock);
+            record.Add(mouseBlock);
+
+            long millisecond = (DateTime.Now.Ticks - recordTime.Ticks) / 10000;
+            recordTimeTotal += millisecond;
+            recordLabel.Text = $"{recordListBox.Items.Count}개의 항목이 기록 됨 ({recordTimeTotal / 1000}.{recordTimeTotal % 1000} 초)";
         }
-        private void addRecordKeyboard(RawKeyboard keyboard)
+        private void AddRecordKeyboard(RawKeyboard keyboard)
         {
             KeyboardBlock keyboardBlock = new KeyboardBlock(keyboard);
-            record.add(keyboardBlock);
+            record.Add(keyboardBlock);
             recordListBox.Items.Add(keyboardBlock.description);
+
+            long millisecond = (DateTime.Now.Ticks - recordTime.Ticks) / 10000;
+            recordTimeTotal += millisecond;
+            recordLabel.Text = $"{recordListBox.Items.Count}개의 항목이 기록 됨 ({recordTimeTotal / 1000}.{recordTimeTotal % 1000} 초)";
         }
-        private void okButtonClick(object sender, EventArgs e)
+        private void OkButtonClick(object sender, EventArgs e)
         {
+            int cnt = (int)countUpDown.Value;
+            // 반복 1회면 루프블럭을 추가하지 않는다
+            if( cnt != 1)
+            {
+                LoopBlock loopBlock = new LoopBlock(0, cnt);
+                record.Add(loopBlock);
+            }
             record.name = "Macro Rec. ";
             this.DialogResult = DialogResult.OK;
+            
         }
-        private void cancelButtonClick(object sender, EventArgs e)
+        private void CancelButtonClick(object sender, EventArgs e)
         {
-            record.clear();
+            record.Clear();
             this.DialogResult = DialogResult.OK;
         }
-        private void mouseMoveCheckBoxCheckedChanged(object sender, EventArgs e)
+        private void MouseMoveCheckBoxCheckedChanged(object sender, EventArgs e)
         {
             if (mouseMoveCheckBox.Checked)
                 mouseMoveUpDown.Enabled = true;
             else
                 mouseMoveUpDown.Enabled = false;
         }
-        private void delayCheckBoxCheckedChanged(object sender, EventArgs e)
+        private void DelayCheckBoxCheckedChanged(object sender, EventArgs e)
         {
             if (delayCheckBox.Checked)
                 delayUpDown.Enabled = true;
             else
                 delayUpDown.Enabled = false;
         }
-        private void startCheckBoxCheckedChanged(object sender, EventArgs e)
+        private void StartCheckBoxCheckedChanged(object sender, EventArgs e)
         {
             if (startCheckBox.Checked)
             {
                 beforeTime = DateTime.Now;
                 previous = Cursor.Position;
                 startCheckBox.Text = "매크로 기록중";
+                recordTime = DateTime.Now;
             }
             else
                 startCheckBox.Text = "기록 대기중";
         }
-        private void mouseButtonCheckBoxCheckedChanged(object sender, EventArgs e)
+        private void MouseButtonCheckBoxCheckedChanged(object sender, EventArgs e)
         {
             if (mouseButtonCheckBox.Checked)
                 includePosCheckBox.Enabled = true;
